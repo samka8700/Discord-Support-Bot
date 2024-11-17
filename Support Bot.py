@@ -11,12 +11,12 @@ bot = commands.InteractionBot(intents=intents)
 bot_token = "Your Bot Token" 
 guild_id = Your Server ID
 category_id = Your category ID
-log_channel_id = Your Log channel ID
+log_channel_id = Support Log Channel ID
 owners_id = Admin(Owner) ID
 
 @bot.event
 async def on_ready():
-    print("Bot is ready.")
+    print(f"Ready")
 
 def create_table():
     con = sqlite3.connect("database.db")
@@ -25,7 +25,6 @@ def create_table():
     cur.execute('''CREATE TABLE IF NOT EXISTS ticket_channels (user_id INTEGER PRIMARY KEY, channel_id INTEGER);''')
     con.commit()
     con.close()
-
 create_table()
 
 def get_db_connection():
@@ -203,7 +202,7 @@ async def close(ctx):
         await ctx.send("Unable to find the log file for this ticket.", ephemeral=True)
 
 @bot.slash_command(default_member_permissions=disnake.Permissions(administrator=True), guild_ids=[guild_id])
-async def blacklist(ctx, user: disnake.User, reason: str = None, action: str = commands.Param(name="Action", choices=["Add", "Remove"])):
+async def blacklist(ctx, user: disnake.User, reason: str = None, action: str = commands.Param(name="action", choices=["Add", "Remove"])):
     con = sqlite3.connect("database.db")
     cur = con.cursor()
     cur.execute("SELECT * FROM blacklist WHERE user_id == ?;", (user.id,))
