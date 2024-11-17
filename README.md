@@ -2,7 +2,7 @@
 
 Discord Support Bot Python
 
-[ RE ]
+[ Install ]
 
 pip install disnake
 
